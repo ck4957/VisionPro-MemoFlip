@@ -12,22 +12,44 @@ struct MemoryGameView: View {
 
     var body: some View {
         VStack {
-            Text("MemoFlip")
-                .font(.largeTitle)
+            Text("MemoFlip - Score: \(game.score)") // Display the score
+                .font(.title)
                 .padding()
 
+            ScrollView {
             LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 4)) {
-                ForEach(game.cards) { card in
-                    MemoryCardView(card: card) {
-                        game.flipCard(card)
-                        game.checkForMatch()
+                    ForEach(game.cards) { card in
+                        CardView(card: card)
+                            .onTapGesture {
+                                game.flipCard(card)
+                                game.checkForMatch()
+                            }
                     }
                 }
+                //.padding()
             }
         }
     }
 }
 
-#Preview(windowStyle: .automatic) {
-    MemoryGameView()
+struct CardView: View {
+    let card: MemoryCard
+
+    var body: some View {
+        ZStack {
+            if card.isFlipped || card.isMatched {
+                Image(systemName: card.imageName)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 100, height: 100)
+                    .background(RoundedRectangle(cornerRadius: 10).fill(.gray))
+            } else {
+                RoundedRectangle(cornerRadius: 10).fill(.gray)
+                                    .frame(width: 100, height: 100)
+
+            }
+        }
+        //.aspectRatio(2/3, contentMode: .fit)
+    }
 }
+

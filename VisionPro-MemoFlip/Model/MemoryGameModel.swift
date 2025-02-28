@@ -17,6 +17,7 @@ struct MemoryCard: Identifiable {
 
 class MemoryGame: ObservableObject {
     @Published var cards: [MemoryCard]
+    @Published var score: Int = 0 // Add a score property
     var reps_sound_effect: AVAudioPlayer?
 
     init() {
@@ -37,7 +38,8 @@ class MemoryGame: ObservableObject {
         let flippedCards = cards.filter { $0.isFlipped && !$0.isMatched }
         if flippedCards.count == 2 {
             if flippedCards[0].imageName == flippedCards[1].imageName {
-                // playSound(sound: "success", type: "wav") // Play success sound
+                score += 10 // Increment the score for a match
+                // playSound(sound: "success", type: ".mp3") // Play success sound
                 for i in 0..<cards.count {
                     if cards[i].id == flippedCards[0].id || cards[i].id == flippedCards[1].id {
                         cards[i].isMatched = true
