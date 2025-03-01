@@ -1,6 +1,5 @@
 //
-//  MemoryGameModel.swift
-//  AVP_RE_Tour
+//  CardGameModel.swift
 //
 //  Created by Chirag Kular on 2/27/25.
 //
@@ -8,21 +7,21 @@
 import AVFoundation
 import Foundation
 
-struct MemoryCard: Identifiable {
+struct Card: Identifiable {
     let id = UUID()
     let imageName: String
     var isFlipped: Bool = false
     var isMatched: Bool = false
 }
 
-class MemoryGame: ObservableObject {
-    @Published var cards: [MemoryCard]
+class CardFlipGame: ObservableObject {
+    @Published var cards: [Card]
     @Published var score: Int = 0
     var reps_sound_effect: AVAudioPlayer?
     
     // Card images stored as a single constant
     private let cardImages = ["star", "car", "bus", "cloud", "cat", "bird", "fish", "leaf",
-"carrot", "house"]
+                              "carrot", "house"]
     
     init() {
         // Initialize with generated cards
@@ -31,9 +30,9 @@ class MemoryGame: ObservableObject {
     }
     
     // Creates a new set of cards
-    private func createCards() -> [MemoryCard] {
+    private func createCards() -> [Card] {
         let pairedImages = cardImages + cardImages
-        return pairedImages.shuffled().map { MemoryCard(imageName: $0) }
+        return pairedImages.shuffled().map { Card(imageName: $0) }
     }
     
     // Setup a new game
@@ -48,7 +47,7 @@ class MemoryGame: ObservableObject {
         playSound(sound: "flipcard", type: ".mp3")
     }
     
-    func flipCard(_ card: MemoryCard) {
+    func flipCard(_ card: Card) {
         if let index = cards.firstIndex(where: { $0.id == card.id }) {
             cards[index].isFlipped.toggle()
             playSound(sound: "flipcard", type: ".mp3")
@@ -63,7 +62,7 @@ class MemoryGame: ObservableObject {
     }
     
     // Handle the match checking logic
-    private func handleMatchCheck(_ flippedCards: [MemoryCard]) {
+    private func handleMatchCheck(_ flippedCards: [Card]) {
         let isMatch = flippedCards[0].imageName == flippedCards[1].imageName
         
         if isMatch {
@@ -77,7 +76,7 @@ class MemoryGame: ObservableObject {
     }
     
     // Handle successful match
-    private func handleMatchSuccess(_ matchedCards: [MemoryCard]) {
+    private func handleMatchSuccess(_ matchedCards: [Card]) {
         score += 10
         
         // Mark matching cards

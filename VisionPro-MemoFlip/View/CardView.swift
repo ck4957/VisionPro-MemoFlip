@@ -1,14 +1,13 @@
 //
-//  MemoryCard.swift
-//  AVP_RE_Tour
+//  CardView.swift
 //
 //  Created by Chirag Kular on 2/27/25.
 //
 
 import SwiftUI
 
-struct MemoryCardView: View {
-    let card: MemoryCard
+struct CardView: View {
+    let card: Card
     
     // Function to get shape-specific color
     private func cardColor(_ imageName: String) -> Color {
@@ -115,5 +114,5 @@ struct MemoryCardView: View {
 }
 
 #Preview {
-    MemoryCardView(card: MemoryCard(imageName: "bus", isFlipped: true, isMatched: false))
+    CardView(card: Card(imageName: "bus", isFlipped: true, isMatched: false))
 }

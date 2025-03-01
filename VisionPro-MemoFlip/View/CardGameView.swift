@@ -1,14 +1,13 @@
 //
-//  MemoryCardView 2.swift
-//  AVP_RE_Tour
+//  CardView.swift
 //
 //  Created by Chirag Kular on 2/27/25.
 //
 
 import SwiftUI
 
-struct MemoryGameView: View {
-    @StateObject private var game = MemoryGame()
+struct CardGameView: View {
+    @StateObject private var game = CardFlipGame()
 
     var body: some View {
         VStack {
@@ -34,7 +33,7 @@ struct MemoryGameView: View {
             ScrollView {
                 LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 4)) {
                     ForEach(game.cards) { card in
-                        MemoryCardView(card: card)
+                        CardView(card: card)
                             .onTapGesture {
                                 game.flipCard(card)
                                 game.checkForMatch()
@@ -45,4 +44,3 @@ struct MemoryGameView: View {
         }
     }
 }
-

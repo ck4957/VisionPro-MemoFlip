@@ -10,11 +10,11 @@ import RealityKitContent
 import SwiftUI
 
 struct ContentView: View {
-    @EnvironmentObject var gameModel: MemoryGame
+    @EnvironmentObject var gameModel: CardFlipGame
 
     var body: some View {
         VStack {
-            MemoryGameView()
+            CardGameView()
                 .padding()
         }.padding()
     }
@@ -22,5 +22,5 @@ struct ContentView: View {
 
 #Preview() {
     ContentView()
-        .environmentObject(MemoryGame())
+        .environmentObject(CardFlipGame())
 }
