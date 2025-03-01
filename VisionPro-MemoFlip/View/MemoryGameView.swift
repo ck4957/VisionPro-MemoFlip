@@ -12,44 +12,37 @@ struct MemoryGameView: View {
 
     var body: some View {
         VStack {
-            Text("MemoFlip - Score: \(game.score)") // Display the score
-                .font(.title)
-                .padding()
+            HStack {
+                Text("MemoFlip - Score: \(game.score)")
+                    .font(.title)
+                    .padding()
+
+                Spacer()
+
+                Button(action: {
+                    game.resetGame()
+                }) {
+                    HStack {
+                        Image(systemName: "arrow.clockwise")
+                        Text("Restart").font(.title2)
+                    }
+                    .padding()
+                }
+                .padding(.trailing)
+            }
 
             ScrollView {
-            LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 4)) {
+                LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 4)) {
                     ForEach(game.cards) { card in
-                        CardView(card: card)
+                        MemoryCardView(card: card)
                             .onTapGesture {
                                 game.flipCard(card)
                                 game.checkForMatch()
                             }
                     }
                 }
-                //.padding()
             }
         }
-    }
-}
-
-struct CardView: View {
-    let card: MemoryCard
-
-    var body: some View {
-        ZStack {
-            if card.isFlipped || card.isMatched {
-                Image(systemName: card.imageName)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 100, height: 100)
-                    .background(RoundedRectangle(cornerRadius: 10).fill(.gray))
-            } else {
-                RoundedRectangle(cornerRadius: 10).fill(.gray)
-                                    .frame(width: 100, height: 100)
-
-            }
-        }
-        //.aspectRatio(2/3, contentMode: .fit)
     }
 }
 

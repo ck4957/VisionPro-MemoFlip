@@ -10,15 +10,17 @@ import RealityKitContent
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject var gameModel: MemoryGame
+
     var body: some View {
         VStack {
             MemoryGameView()
                 .padding()
-
         }.padding()
     }
 }
 
-#Preview(windowStyle: .automatic) {
+#Preview() {
     ContentView()
+        .environmentObject(MemoryGame())
 }
